@@ -112,17 +112,13 @@ diffcoeff(kB,270,1,1)
 ```python
 from aide_design.play import*
 
-xArray = u.Quantity(np.arange(0.1, 0.5, 0.01), u.m)
+tempsArray = u.Quantity(np.arange(0,150,1), u.celsius)
+print(pc.viscosity_kinematic(50))
 
-@u.wraps(None, [u.m / u.s, u.m, u.m ** 2 / u.s], False)
-def re_flat_plate(velocity, dist, nu):
-  """This function calculates the Reynolds Number for flow past a plate using fluid velocity, plate length, and kinematic viscosity."""
-  return (velocity * dist / nu)
-
-plt.plot(xArray, 5 * xArray / np.sqrt(re_flat_plate(1, xArray, pc.viscosity_kinematic(293 * u.kelvin))), '-', label = 'Blasius Solution')
-plt.xlabel('Distance From Leading Edge (Meters)')
-plt.ylabel('Boundary Layer Thickness (Meters)')
-plt.title('Blasius Solution for Water at 293 K')
+plt.plot(tempsArray, pc.viscosity_kinematic(tempsArray), '-', label = 'Reynolds Number')
+plt.xlabel('Temperature (in Celcius)')
+plt.ylabel('Reynolds Number')
+plt.title('Reynolds Number vs Temperature')
 plt.minorticks_on()
 plt.grid(which = 'major')
 plt.grid(which = 'minor')
